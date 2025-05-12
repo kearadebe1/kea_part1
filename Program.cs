@@ -10,8 +10,17 @@ namespace kea_part1
     {
         static void Main(string[] args)
         {
+            //creating instance for voice_over
+            new voice_over() { };
+
+            new logo() { };
+
+
             //creating an instance for security_awe
             new security_awe() { };
+
+            //creating an instance for MemoryRecall_generic
+            new MemoryRecall_generic() { };
         }
     }
 }

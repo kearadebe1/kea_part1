@@ -15,72 +15,7 @@ namespace kea_part1
         //constructer
         public security_awe()
         {
-            // 1.Firstly we will add the voice over to welcome the user to our cyber space.
-
-            // get the location of the project
-            string right_location = AppDomain.CurrentDomain.BaseDirectory;
-
-            //replacing the bin and the debug
-            string new_path = right_location.Replace("bin\\Debug\\", "");
-
-            //try and catch
-            try
-            {
-                //combine the paths
-                string right_path = Path.Combine(new_path, "voice_over.wav");
-
-                // creating instance for SoundPlay class
-                using (SoundPlayer play = new SoundPlayer(right_path))
-                {
-
-                    //play the file
-                    play.PlaySync();
-                }
-
-
-            }//end of try
-            catch (Exception error)
-            {
-                Console.WriteLine(error.Message);
-            }//end of catch
-
-            //2. We select the Image
-
-            //get full location of the project
-
-            string full_location = AppDomain.CurrentDomain.BaseDirectory;
-
-            //replace the bin and debug
-            string new_location = full_location.Replace("bin\\Debug\\", "");
-
-            //combining the path
-            string full_path = Path.Combine(new_location, "pic.png");
-
-            //then time to use ascii
-
-            //creating the BitMap class
-            Bitmap image = new Bitmap(full_path);
-
-            //then set the size
-            image = new Bitmap(image, new Size(150, 100));
-
-            //enter the inner loop
-            for (int height = 0; height < image.Height; height++)
-            {
-                for (int width = 0; width < image.Width; width++)
-                {
-                    Color pixelColor = image.GetPixel(width, height);
-                    int grey = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
-                    char asciiChar = grey > 200 ? '.' : grey > 150 ? '*' : grey > 100 ? '0' : grey > 150 ? '#' : '@';
-                    Console.Write(asciiChar);
-
-
-                }
-
-                // end of inner for loop
-                Console.WriteLine();
-            }
-
+            
 
 
             //Welcome display
@@ -116,9 +51,6 @@ namespace kea_part1
                 name = Console.ReadLine();
             }
           
-
-
-
 
             do
             {
@@ -188,9 +120,19 @@ namespace kea_part1
                 ArrayList hidden = new ArrayList();
 
                 //then store
-                respond.Add("password safety: \n create a password atleast 12 characters long. \n Use a combination of lower and upper case and special characters. \n Use auto generated password. ");
-                respond.Add("phishing: \n Avoid sharing personal information. \n Use a two-facter authentification \n keep your and security tools up to date.");
-                respond.Add("safe browsing: \n use a secure internet connection \n close unused accounts \n keep software and browsing udated");
+                respond.Add("password safety: create a password atleast 12 characters long. ");
+                respond.Add("password safety: Use a combination of lower and upper case and special characters.");
+                respond.Add(" password safety: Use auto generated password. ");
+
+                respond.Add("phishing:  Avoid sharing personal information.");
+                respond.Add("phishing:  Use a two-facter ");
+                respond.Add("phishing:  Use a secure internet connection " );
+                respond.Add("phishing:  close unused accounts.");
+                respond.Add("phishing:  Keep your and security tools up to date.");
+
+                respond.Add("safe browsing:  use a secure internet connection ");
+                respond.Add("safe browsing:  close unused accounts ");
+                respond.Add("safe browsing:  keep software and browsing udated");
 
                 hidden.Add("tell");
                 hidden.Add("me");

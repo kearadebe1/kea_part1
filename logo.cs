@@ -1,6 +1,6 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.IO;
-using System;
 
 namespace kea_part1
 {
@@ -25,7 +25,7 @@ namespace kea_part1
             Bitmap image = new Bitmap(full_path);
 
             //then set the size
-            image = new Bitmap(image, new Size(150, 100));
+            image = new Bitmap(image, new Size(100, 100));
 
             //enter the inner loop
             for (int height = 0; height < image.Height; height++)

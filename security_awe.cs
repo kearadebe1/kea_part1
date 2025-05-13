@@ -1,21 +1,27 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.IO;
-using System.Media;
-using System;
-using System.Drawing;
-using System.Diagnostics.Eventing.Reader;
+
 
 namespace kea_part1
 {
     public class security_awe
+
     {
+
+        private MemoryRecall_generics memory;
+        private Chatbot chatbot; //Instance of the Chatbot class
+        // rest of your constructor and code
+
         //Adding the global variable
         private string name = string.Empty;
-        private string description = string.Empty;
+        private string userInput = string.Empty;
         //constructer
         public security_awe()
         {
-            
+            //Creating the memory instance
+            memory = new MemoryRecall_generics();
+
 
 
             //Welcome display
@@ -48,9 +54,25 @@ namespace kea_part1
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.Write("User: ");
                 Console.ForegroundColor = ConsoleColor.White;
-                name = Console.ReadLine();
+                name = Console.ReadLine(); //Re-ask for the name
             }
-          
+            else
+            {
+                //Name is valid, you can proceed with the rest of the code
+                //Create the memory instance and store the name
+
+            }
+
+            // Create the memory instance and store the name
+            memory = new MemoryRecall_generics();
+            memory.StoreUserData("name", name);
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("Hello " + name + ", nice to meet you!");
+
+
+            //Start conversation flow
+            StartConversation();
+
 
             do
             {
@@ -76,9 +98,9 @@ namespace kea_part1
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.Write(name + ": ");
                 Console.ForegroundColor = ConsoleColor.White;
-                description = Console.ReadLine();
+                this.userInput = Console.ReadLine();
 
-                if (description != "exit")
+                if (this.userInput != "exit")
                 {
                     // display the answer
                     Console.ForegroundColor = ConsoleColor.Magenta;
@@ -96,7 +118,8 @@ namespace kea_part1
                     System.Environment.Exit(0);
                 }
 
-
+                //Genrate a response using the chatbot instance
+                string response = chatbot.GenerateResponse(this.userInput);
 
 
                 //prompting the user to enter question
@@ -111,7 +134,7 @@ namespace kea_part1
                 Console.ForegroundColor = ConsoleColor.White;
                 string ask = Console.ReadLine();
 
-              
+
 
 
 
@@ -126,7 +149,7 @@ namespace kea_part1
 
                 respond.Add("phishing:  Avoid sharing personal information.");
                 respond.Add("phishing:  Use a two-facter ");
-                respond.Add("phishing:  Use a secure internet connection " );
+                respond.Add("phishing:  Use a secure internet connection ");
                 respond.Add("phishing:  close unused accounts.");
                 respond.Add("phishing:  Keep your and security tools up to date.");
 
@@ -142,7 +165,7 @@ namespace kea_part1
                 string[] filtered_responce = ask.Split(' ');
                 ArrayList correct_responce = new ArrayList();
 
-               
+
                 // then display the answer using the for loop
                 //as it search it should filter more
 
@@ -173,25 +196,27 @@ namespace kea_part1
                     {
                         //then display the answer
                         for (int count = 0; count < respond.Count; count++)
-                            
+
                         {
                             // then final display the found one
                             if (respond[count].ToString().Contains(correct_responce[counting].ToString()))
                             {
                                 //output
                                 Console.WriteLine(respond[count].ToString());
+
                             }//end of if statement.
-                            design_ui(description);
+                            //Call design_ui inside this IF so it's not called for every loop iteration unnecessarily
+                            design_ui(this.userInput);
+
+
+                        }//end of inner for loop
+                    }//end of outer for loop
+                }//end of if (found)
 
 
 
 
-                        }//end of for loop nested
-                    }
-
-
-
-                }
+                
                 else
                 {
                     //then display the answer
@@ -202,29 +227,61 @@ namespace kea_part1
                 }
 
 
-            } while (description != "exit");
+            } while (this.userInput != "exit");
 
 
 
 
         }//end of class
 
-        private void design_ui(string asked) {
-          if(asked != "exit")
-            {
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.Write("Chatbot: ");
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("I hope this response was helpful.");
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.Write("Chatbot: ");
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Thank you for using our chatbot, Bye");
-                System.Environment.Exit(0);
-            }
+        private void design_ui(string userInput)
+        {
+            throw new NotImplementedException();
+        }
 
-        }//end of namespace
-    } }
+        private void StartConversation()
+        {
+           do
+            {
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write("Chatbot: ");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("How can I assist you today?");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write(name + ": ");
+                Console.ForegroundColor = ConsoleColor.White;
+                userInput = Console.ReadLine();
+
+                if (userInput.ToLower() != "exit")
+                {
+                    string response = chatbot.GenerateResponse(userInput);
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.Write("Chatbot: ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine(response);
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.Write("Chatbot: ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("Thank you for chatting. Stay safe online!");
+                    break;
+                }
+
+            } while (true);
+        }
+    }
+        }
+
+      
+
+        //end of namespace
+    
+
+    // End of class security_awe
+
+// End of namespace kea_part1
+
+
+

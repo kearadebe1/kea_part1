@@ -1,6 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Media;
-using System;
 
 namespace kea_part1
 {

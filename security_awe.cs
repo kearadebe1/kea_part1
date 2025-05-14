@@ -1,287 +1,219 @@
 ﻿using System;
-using System.Collections;
-using System.IO;
-
+using System.Collections.Generic;
+using System.Linq;
 
 namespace kea_part1
 {
-    public class security_awe
-
+    public class SecurityAwe
     {
-
-        private MemoryRecall_generics memory;
-        private Chatbot chatbot; //Instance of the Chatbot class
-        // rest of your constructor and code
-
-        //Adding the global variable
-        private string name = string.Empty;
-        private string userInput = string.Empty;
-        //constructer
-        public security_awe()
+        string name = string.Empty;
+        public SecurityAwe()
         {
-            //Creating the memory instance
-            memory = new MemoryRecall_generics();
-
-
-
-            //Welcome display
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("*--------------------------------------------------------------------*");
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine("|                    CYBERSECURITY AWARENESS CHATBOT:)               |");
+            Console.WriteLine("|                    CYBERSECURITY AWARENESS CHATBOT :)              |");
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("*--------------------------------------------------------------------*");
 
-
-
-            //AI asking for the username
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.Write("Chatbot: ");
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Please enter your name:");
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write("User: ");
+            Console.Write($"{name}: ");
             Console.ForegroundColor = ConsoleColor.White;
-            name = Console.ReadLine();
 
-            //then check if the name is empty
-            if (string.IsNullOrEmpty(name))
+            
+            while (string.IsNullOrWhiteSpace(name))
             {
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.Write("Chatbot: ");
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Please enter a valid name.");
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("User: ");
-                Console.ForegroundColor = ConsoleColor.White;
-                name = Console.ReadLine(); //Re-ask for the name
-            }
-            else
-            {
-                //Name is valid, you can proceed with the rest of the code
-                //Create the memory instance and store the name
-
+                name = Console.ReadLine();
+                name = string.IsNullOrWhiteSpace(name) ? "" : name;
+                if (string.IsNullOrEmpty(name))
+                {
+                    Console.WriteLine("Please enter a valid name:");
+                }
             }
 
-            // Create the memory instance and store the name
-            memory = new MemoryRecall_generics();
-            memory.StoreUserData("name", name);
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("Hello " + name + ", nice to meet you!");
 
+            string favoriteTopic = string.Empty;
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("What is your favorite topic in cybersecurity?");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write($"{name}: ");
+            Console.ForegroundColor = ConsoleColor.White;
 
-            //Start conversation flow
-            StartConversation();
-
-
-            do
+            while (string.IsNullOrWhiteSpace(favoriteTopic))
             {
-                //prompting the user to ask a question
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.Write("Chatbot: ");
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Welcome to the Cyber Space " + name + "How can i assist you today :");
-
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write(name + ": ");
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.ReadLine();
-
-                //recreating the interface
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.Write("Chatbot: ");
-                Console.ForegroundColor = ConsoleColor.White;
-
-                Console.WriteLine("I'm here to to keep you safe from Cyber threats. \n providing the following information \n password safety \n Phishing \n safe browsing \n type 'exit' to leave the aplication."
-                );
-
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write(name + ": ");
-                Console.ForegroundColor = ConsoleColor.White;
-                this.userInput = Console.ReadLine();
-
-                if (this.userInput != "exit")
+                favoriteTopic = Console.ReadLine();
+                favoriteTopic = string.IsNullOrWhiteSpace(favoriteTopic) ? "" : favoriteTopic;
+                if (string.IsNullOrEmpty(favoriteTopic))
                 {
-                    // display the answer
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-                    Console.Write("Chatbot: ");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine("Here is the responce i have for you....");
-
+                    Console.WriteLine("Please enter a valid topic:");
                 }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-                    Console.Write("Chatbot: ");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine("Thank you for using the Cybersecurity Awareness Chatbot. Goodbye!");
-                    System.Environment.Exit(0);
-                }
+            }
 
-                //Genrate a response using the chatbot instance
-                string response = chatbot.GenerateResponse(this.userInput);
-
-
-                //prompting the user to enter question
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.Write("ChatBot: ");
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("How can I assist you:");
-
-
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write(name + ": ");
-                Console.ForegroundColor = ConsoleColor.White;
-                string ask = Console.ReadLine();
-
-
-
-
-
-                //declare variable and array
-                ArrayList respond = new ArrayList();
-                ArrayList hidden = new ArrayList();
-
-                //then store
-                respond.Add("password safety: create a password atleast 12 characters long. ");
-                respond.Add("password safety: Use a combination of lower and upper case and special characters.");
-                respond.Add(" password safety: Use auto generated password. ");
-
-                respond.Add("phishing:  Avoid sharing personal information.");
-                respond.Add("phishing:  Use a two-facter ");
-                respond.Add("phishing:  Use a secure internet connection ");
-                respond.Add("phishing:  close unused accounts.");
-                respond.Add("phishing:  Keep your and security tools up to date.");
-
-                respond.Add("safe browsing:  use a secure internet connection ");
-                respond.Add("safe browsing:  close unused accounts ");
-                respond.Add("safe browsing:  keep software and browsing udated");
-
-                hidden.Add("tell");
-                hidden.Add("me");
-                hidden.Add("about");
-
-                // split the question and store in the 1D array
-                string[] filtered_responce = ask.Split(' ');
-                ArrayList correct_responce = new ArrayList();
-
-
-                // then display the answer using the for loop
-                //as it search it should filter more
-
-                Boolean found = false;
-
-                for (int count = 0; count < filtered_responce.Length; count++)
-                {
-                    //then final filter
-                    if (!hidden.Contains(filtered_responce[count]))
-                    {
-                        //then assign to true
-                        found = true;
-                        //then add the value to the correct filtered
-                        correct_responce.Add(filtered_responce[count]);
-
-
-
-
-                    }
-
-
-
-                }
-                //then check if found
-                if (found)
-                {
-                    for (int counting = 0; counting < correct_responce.Count; counting++)
-                    {
-                        //then display the answer
-                        for (int count = 0; count < respond.Count; count++)
-
-                        {
-                            // then final display the found one
-                            if (respond[count].ToString().Contains(correct_responce[counting].ToString()))
-                            {
-                                //output
-                                Console.WriteLine(respond[count].ToString());
-
-                            }//end of if statement.
-                            //Call design_ui inside this IF so it's not called for every loop iteration unnecessarily
-                            design_ui(this.userInput);
-
-
-                        }//end of inner for loop
-                    }//end of outer for loop
-                }//end of if (found)
-
-
-
-
-                
-                else
-                {
-                    //then display the answer
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-                    Console.Write("Chatbot: ");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine("Sorry, I don't understand your question. Please try again.");
-                }
-
-
-            } while (this.userInput != "exit");
-
-
-
-
-        }//end of class
-
-        private void design_ui(string userInput)
-        {
-            throw new NotImplementedException();
+            Console.WriteLine($"Great to know that you're interested in {favoriteTopic}. Let's get started!");
+            ConversationLoop(name, favoriteTopic);
         }
 
-        private void StartConversation()
+        public void ConversationLoop(string name, string favoriteTopic)
         {
-           do
+            string[] skipWords = new[] { "tell", "me", "about" };
+            Random rand = new Random();
+
+            Dictionary<string, string[]> topicResponses = new Dictionary<string, string[]>
+            {
+                { "password safety", new[] {
+                    "Create a password at least 12 characters long.",
+                    "Use a combination of lowercase, uppercase, numbers, and special characters.",
+                    "Use a password manager to generate and store passwords."
+                }},
+                { "phishing", new[] {
+                    "Avoid clicking on suspicious links.",
+                    "Always verify the sender's email address.",
+                    "Never share personal info over email."
+                }},
+                { "safe browsing", new[] {
+                    "Always check for HTTPS in the URL.",
+                    "Don’t download software from untrusted sources.",
+                    "Avoid visiting suspicious websites."
+                }},
+                { "privacy", new[] {
+                    "Adjust your social media privacy settings regularly.",
+                    "Avoid oversharing personal information online.",
+                    "Use privacy-focused search engines like DuckDuckGo."
+                }},
+                { "ransomware", new[] {
+                    "Regularly back up important files.",
+                    "Avoid opening attachments from unknown senders.",
+                    "Keep your operating system up to date."
+                }},
+                { "identity theft", new[] {
+                    "Shred documents with personal information before discarding.",
+                    "Use credit monitoring services.",
+                    "Check your bank statements regularly."
+                }},
+                { "scam", new[] {
+                    "Don’t trust messages asking for urgent money transfers.",
+                    "Double-check with the source before acting on strange requests.",
+                    "Report scams to authorities."
+                }},
+                { "malware", new[] {
+                    "Use antivirus software and keep it updated.",
+                    "Be cautious when downloading from the internet.",
+                    "Avoid clicking unknown links."
+                }},
+                { "social engineering", new[] {
+                    "Don’t give out personal info without verification.",
+                    "Learn how attackers manipulate trust.",
+                    "Always verify before taking action on suspicious messages."
+                }}
+            };
+
+            string[] greetings = {
+                "What would you like to learn about today?",
+                "Need help with something specific in cybersecurity?",
+                "Ask me anything about digital safety!",
+                "Which cybersecurity topic can I assist you with?",
+                "Let’s explore how you can stay safe online!"
+            };
+
+            string[] followUps = {
+                "Anything else you'd like to ask?",
+                "Would you like more tips?",
+                "Feel free to ask about another topic.",
+                "Want to explore another cybersecurity area?",
+                "I'm here if you have more questions!"
+            };
+
+            while (true)
             {
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.Write("Chatbot: ");
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("How can I assist you today?");
+                Console.WriteLine(greetings[rand.Next(greetings.Length)]);
+
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.Write(name + ": ");
                 Console.ForegroundColor = ConsoleColor.White;
-                userInput = Console.ReadLine();
+                string userInput = Console.ReadLine();
 
-                if (userInput.ToLower() != "exit")
-                {
-                    string response = chatbot.GenerateResponse(userInput);
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-                    Console.Write("Chatbot: ");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine(response);
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-                    Console.Write("Chatbot: ");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine("Thank you for chatting. Stay safe online!");
+                if (userInput.ToLower() == "exit")
                     break;
+
+                string sentimentResponse = DetectSentiment(userInput);
+                if (!string.IsNullOrEmpty(sentimentResponse))
+                {
+                    RespondToUser(sentimentResponse);
                 }
 
-            } while (true);
+                string cleanedInput = string.Join(" ", userInput.Split(' ')
+                    .Where(w => !skipWords.Contains(w.ToLower()))).ToLower();
+
+                string matchedTopic = topicResponses.Keys
+                    .FirstOrDefault(topic => cleanedInput.Contains(topic));
+
+                string response = matchedTopic != null
+                    ? topicResponses[matchedTopic][rand.Next(topicResponses[matchedTopic].Length)]
+                    : "Sorry, I didn't understand. Please ask about a cybersecurity topic like 'phishing' or 'ransomware'.";
+
+                if (cleanedInput.Contains(favoriteTopic.ToLower()))
+                {
+                    response = $"Great choice! You're interested in {favoriteTopic}. Here's a tip: {response}";
+                }
+
+                RespondToUser(response);
+
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write("Chatbot: ");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine(followUps[rand.Next(followUps.Length)]);
+
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write(name + ": ");
+                Console.ForegroundColor = ConsoleColor.White;
+                string continueInput = Console.ReadLine();
+                if (continueInput.ToLower() == "exit")
+                    break;
+            }
+
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write("Chatbot: ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Thank you for using the Cybersecurity Awareness Chatbot. Stay safe!");
+        }
+
+        private void RespondToUser(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write("Chatbot: ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(message);
+        }
+
+        private string DetectSentiment(string input)
+        {
+            string lowerInput = input.ToLower();
+
+            if (lowerInput.Contains("worried") || lowerInput.Contains("scared") || lowerInput.Contains("overwhelmed"))
+            {
+                return "It's totally okay to feel that way. Cybersecurity can seem overwhelming, but you're not alone—I'm here to help you feel confident and protected.";
+            }
+
+            if (lowerInput.Contains("curious") || lowerInput.Contains("interested") || lowerInput.Contains("keen"))
+            {
+                return "I love that you're curious! Learning about cybersecurity is a powerful step toward protecting yourself online.";
+            }
+
+            if (lowerInput.Contains("frustrated") || lowerInput.Contains("confused"))
+            {
+                return "It’s normal to feel confused sometimes. Cybersecurity has a lot of jargon, but I’ll guide you through it step by step!";
+            }
+
+            return string.Empty;
         }
     }
-        }
-
-      
-
-        //end of namespace
-    
-
-    // End of class security_awe
-
-// End of namespace kea_part1
-
-
-
+}

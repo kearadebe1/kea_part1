@@ -11,18 +11,12 @@
 
             new logo() { };
 
-            //creating an instance for Chatbot
-            Chatbot chatbot = new Chatbot();
-            string response = chatbot.GenerateResponse(userInput);
 
-            //creating an instance for chatbot*
-            new Chatbot() { };
 
             //creating an instance for security_awe
-            new security_awe() { };
+            new SecurityAwe() { };
 
-            //creating an instance for MemoryRecall_generic
-            new MemoryRecall_generics() { };
+            
         }
     }
 }
